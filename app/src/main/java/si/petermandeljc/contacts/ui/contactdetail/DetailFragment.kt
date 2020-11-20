@@ -7,6 +7,8 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.trello.rxlifecycle4.kotlin.bindToLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	private lateinit var surnameView: EditText
 	private lateinit var emailView: EditText
 	private lateinit var avatarView: ImageView
+	private lateinit var saveView: FloatingActionButton
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
@@ -29,6 +32,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		subscribeAvatar()
 		subscribeSurname()
 		subscribeEmail()
+		subscribeSave()
 	}
 
 	private fun findViews() {
@@ -37,6 +41,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		surnameView = binding.surname
 		emailView = binding.email
 		avatarView = binding.avatarView
+		saveView = binding.save
 	}
 
 	private fun subscribeName() {
@@ -86,6 +91,12 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 					.circleCrop()
 					.into(view)
 			}
+	}
+
+	private fun subscribeSave() {
+		saveView.clicks()
+			.bindToLifecycle(requireView())
+			.subscribe(viewModel.saveObserver())
 	}
 
 }

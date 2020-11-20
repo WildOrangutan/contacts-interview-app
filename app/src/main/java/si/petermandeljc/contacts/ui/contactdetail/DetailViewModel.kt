@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.data.ContactRepository
 
@@ -25,12 +26,14 @@ class DetailViewModel @ViewModelInject constructor(
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
+	private val saveSubj = PublishSubject.create<Unit>()
 	private val disposables = CompositeDisposable()
 
 	init {
 		subscribeToName()
 		subscribeToSurname()
 		subscribeToEmail()
+		subscribeToSave()
 	}
 
 	private fun subscribeToName() {
@@ -45,6 +48,11 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private fun subscribeToEmail() {
 		val disposable = emailSubj.subscribe { email -> contact.copy(email=email)}
+		addDisposable(disposable)
+	}
+
+	private fun subscribeToSave() {
+		val disposable = saveSubj.subscribe { repository.set(contact) }
 		addDisposable(disposable)
 	}
 
@@ -80,10 +88,13 @@ class DetailViewModel @ViewModelInject constructor(
 		return avatarSubj.distinctUntilChanged()
 	}
 
+	fun saveObserver() : Observer<Unit> {
+		return saveSubj
+	}
+
 	override fun onCleared() {
 		super.onCleared()
 		disposables.clear()
-		repository.set(contact)
 	}
 
 }

@@ -68,4 +68,16 @@
 			/>
 	</com.google.android.material.textfield.TextInputLayout>
 
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/save"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:tint="@android:color/white"
+		android:src="@drawable/ic_check"
+		android:contentDescription="@string/content_desc_save_contact"
+		/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
