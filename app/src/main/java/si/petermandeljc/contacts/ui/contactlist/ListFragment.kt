@@ -26,6 +26,8 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	private lateinit var binding: ContactListBinding
 
+	private val mainActivity get() = requireActivity() as MainActivity
+
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding = ContactListBinding.bind(view)
@@ -53,8 +55,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 	}
 
 	private fun editContact(contact: Contact) {
-		val activity = requireActivity() as MainActivity
-		activity.editContact(contact)
+		mainActivity.editContact(contact)
 	}
 
 	private fun addDisposable(disposable: Disposable) {
