@@ -22,11 +22,13 @@ class ListViewModel @ViewModelInject constructor(
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
 	private val contactClickSubj = PublishSubject.create<Contact?>()
 	private val editContactSubj = PublishSubject.create<Contact>()
+	private val addContactSubj = PublishSubject.create<Unit>()
 	private val disposables = CompositeDisposable()
 
 	init {
 		loadContacts()
 		subscribeClickSubject()
+		subscribeAddContactSubject()
 	}
 
 	private fun loadContacts() {
@@ -46,6 +48,11 @@ class ListViewModel @ViewModelInject constructor(
 		disposables.add(disposable)
 	}
 
+	private fun subscribeAddContactSubject() {
+		val disposable = addContactSubj.subscribe { editContactSubj.onNext(Contact.neu())}
+		disposables.add(disposable)
+	}
+
 	override fun onCleared() {
 		super.onCleared()
 		disposables.clear()
@@ -61,6 +68,10 @@ class ListViewModel @ViewModelInject constructor(
 
 	fun editContactObservable() : Observable<Contact> {
 		return editContactSubj
+	}
+
+	fun addContactObserver() : Observer<Unit> {
+		return addContactSubj
 	}
 
 }

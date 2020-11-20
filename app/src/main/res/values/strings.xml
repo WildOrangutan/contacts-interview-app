@@ -4,4 +4,5 @@
 	<string name="name">Name</string>
 	<string name="surname">Surname</string>
 	<string name="e_mail">E-mail</string>
+	<string name="new_contact">New contact</string>
 </resources>

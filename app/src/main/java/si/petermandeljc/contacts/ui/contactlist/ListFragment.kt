@@ -1,6 +1,9 @@
 package si.petermandeljc.contacts.ui.contactlist
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +31,11 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	private val mainActivity get() = requireActivity() as MainActivity
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setHasOptionsMenu(true)
+	}
+
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		binding = ContactListBinding.bind(view)
@@ -52,6 +60,18 @@ class ListFragment : Fragment(R.layout.contact_list) {
 		val disposable = viewModel.editContactObservable()
 			.subscribe { contact -> editContact(contact) }
 		addDisposable(disposable)
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+		inflater.inflate(R.menu.contact_list_menu, menu)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if(item.itemId == R.id.menu_new_contact) {
+			viewModel.addContactObserver().onNext(Unit)
+			return true
+		}
+		return false
 	}
 
 	private fun editContact(contact: Contact) {
