@@ -12,4 +12,8 @@ class CachedContactDataSource { // : DataSource
 		return contacts[uuid]
 	}
 
+	fun loadAll() : Collection<Contact> {
+		return contacts.values.toList()
+	}
+
 }
