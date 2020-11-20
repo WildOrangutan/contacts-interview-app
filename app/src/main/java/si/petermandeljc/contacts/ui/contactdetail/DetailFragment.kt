@@ -18,15 +18,18 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 
 	private val viewModel: DetailViewModel by viewModels()
 	private lateinit var nameView: EditText
+	private lateinit var surnameView: EditText
 	private lateinit var avatarView: ImageView
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		val binding = ContactDetailBinding.bind(view)
 		nameView = binding.name
+		surnameView = binding.surname
 		avatarView = binding.avatarView
 		subscribeName()
 		subscribeAvatar()
+		subscribeSurname()
 	}
 
 	private fun subscribeName() {
@@ -39,6 +42,18 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 			.bindToLifecycle(view)
 			.map { name -> name.toString() }
 			.subscribe(viewModel.nameObserver())
+	}
+
+	private fun subscribeSurname() {
+		val view = surnameView
+		viewModel.surnameObservable()
+			.bindToLifecycle(view)
+			.filter { surname -> surname != view.text.toString() }
+			.subscribe { surname -> view.setText(surname) }
+		view.textChanges()
+			.bindToLifecycle(view)
+			.map { surname -> surname.toString() }
+			.subscribe(viewModel.surnameObserver())
 	}
 
 	private fun subscribeAvatar() {

@@ -2,4 +2,5 @@
     <string name="app_name">contacts</string>
 	<string name="content_desc_avatar_image">Avatar image</string>
 	<string name="name">Name</string>
+	<string name="surname">Surname</string>
 </resources>
