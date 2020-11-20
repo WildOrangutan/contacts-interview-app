@@ -53,6 +53,7 @@ class Holder(
 		Glide.with(context)
 			.load(contact.avatarPath)
 			.placeholder(AvatarPlaceholder(contact.initials()))
+			.circleCrop()
 			.into(binding.avatar)
 
 		// noinspection SetTextI18n - Not worth it for single space
