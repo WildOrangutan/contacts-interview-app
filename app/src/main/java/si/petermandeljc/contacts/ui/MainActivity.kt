@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import si.petermandeljc.contacts.R
+import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.databinding.MainActivityBinding
 import si.petermandeljc.contacts.ui.contactlist.ListFragment
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 		supportFragmentManager.beginTransaction()
 			.replace(R.id.fragment, fragment)
 			.commit()
+	}
+
+	fun editContact(contact: Contact) {
+		// TODO
 	}
 
 }

@@ -11,7 +11,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import si.petermandeljc.contacts.R
+import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.databinding.ContactListBinding
+import si.petermandeljc.contacts.ui.MainActivity
 
 @AndroidEntryPoint
 class ListFragment : Fragment(R.layout.contact_list) {
@@ -28,6 +30,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 		super.onViewCreated(view, savedInstanceState)
 		binding = ContactListBinding.bind(view)
 		initListView()
+		subscribeToEditContact()
 	}
 
 	private fun initListView() {
@@ -41,6 +44,17 @@ class ListFragment : Fragment(R.layout.contact_list) {
 				adapter.updateContacts(contacts.toList())
 			}
 		addDisposable(disposable)
+	}
+
+	private fun subscribeToEditContact() {
+		val disposable = viewModel.editContactObservable()
+			.subscribe { contact -> editContact(contact) }
+		addDisposable(disposable)
+	}
+
+	private fun editContact(contact: Contact) {
+		val activity = requireActivity() as MainActivity
+		activity.editContact(contact)
 	}
 
 	private fun addDisposable(disposable: Disposable) {
