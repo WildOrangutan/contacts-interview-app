@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.reactivex.rxjava3.core.Observer
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.databinding.ContactListItemBinding
 
-class ListAdapter(private var contacts: List<Contact>) : RecyclerView.Adapter<Holder>() {
+class ListAdapter(
+	private var contacts: List<Contact>,
+	private val clickObserver: Observer<Contact>
+) : RecyclerView.Adapter<Holder>() {
 
 	fun updateContacts(newContacts: List<Contact>) {
 		contacts = newContacts
@@ -21,7 +25,7 @@ class ListAdapter(private var contacts: List<Contact>) : RecyclerView.Adapter<Ho
 		val context = parent.context
 		val inflater = LayoutInflater.from(context)
 		val binding = ContactListItemBinding.inflate(inflater)
-		return Holder(binding)
+		return Holder(binding, clickObserver)
 	}
 
 	override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -41,15 +45,19 @@ class ListAdapter(private var contacts: List<Contact>) : RecyclerView.Adapter<Ho
 }
 
 class Holder(
-	private val binding: ContactListItemBinding
+	private val binding: ContactListItemBinding,
+	private val clickObserver: Observer<Contact>
 ) : RecyclerView.ViewHolder(binding.root) {
 
+	private val root = binding.root
 	private val avatar = binding.avatar
 	private val title = binding.title
 	private val email = binding.email
 	private val context = avatar.context
 
 	fun bind(contact: Contact) {
+		root.setOnClickListener { clickObserver.onNext(contact) }
+
 		Glide.with(context)
 			.load(contact.avatarPath)
 			.placeholder(AvatarPlaceholder(contact.initials()))
@@ -63,6 +71,7 @@ class Holder(
 	}
 
 	fun unbind() {
+		root.setOnClickListener(null)
 		avatar.setImageDrawable(null)
 		title.text = ""
 		email.text = ""

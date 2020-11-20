@@ -15,9 +15,9 @@ import si.petermandeljc.contacts.databinding.ContactListBinding
 @AndroidEntryPoint
 class ListFragment : Fragment(R.layout.contact_list) {
 
-	private val adapter = ListAdapter(mutableListOf())
 	private val disposables = CompositeDisposable()
 	private val viewModel: ListViewModel by viewModels()
+	private val adapter = ListAdapter(mutableListOf(), viewModel.contactClickObserver())
 
 	private lateinit var binding: ContactListBinding
 

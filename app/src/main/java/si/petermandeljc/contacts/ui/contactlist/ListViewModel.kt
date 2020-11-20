@@ -6,7 +6,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.data.ContactRepository
 
@@ -17,9 +20,12 @@ class ListViewModel @ViewModelInject constructor(
 
 	private val contacts: MutableCollection<Contact> = mutableListOf()
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
+	private val contactClickSubj = PublishSubject.create<Contact?>()
+	private val disposables = CompositeDisposable()
 
 	init {
 		loadContacts()
+		subscribeClickSubject()
 	}
 
 	private fun loadContacts() {
@@ -34,8 +40,26 @@ class ListViewModel @ViewModelInject constructor(
 			}
 	}
 
+	private fun subscribeClickSubject() {
+		val disposable = contactClickSubj.subscribe { contact -> onContactClick(contact)}
+		disposables.add(disposable);
+	}
+
+	private fun onContactClick(contact: Contact) {
+		TODO("edit contact")
+	}
+
+	override fun onCleared() {
+		super.onCleared()
+		disposables.clear()
+	}
+
 	fun contactsObservable() : Observable<Collection<Contact>> {
 		return contactsSubj
+	}
+
+	fun contactClickObserver() : Observer<Contact> {
+		return contactClickSubj
 	}
 
 }
