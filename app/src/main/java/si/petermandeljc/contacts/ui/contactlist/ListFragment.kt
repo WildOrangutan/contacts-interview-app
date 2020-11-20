@@ -9,6 +9,7 @@ import com.trello.rxlifecycle4.kotlin.bindToLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import si.petermandeljc.contacts.R
 import si.petermandeljc.contacts.databinding.ContactListBinding
 
@@ -39,6 +40,10 @@ class ListFragment : Fragment(R.layout.contact_list) {
 			.subscribe { contacts ->
 				adapter.updateContacts(contacts.toList())
 			}
+		addDisposable(disposable)
+	}
+
+	private fun addDisposable(disposable: Disposable) {
 		disposables.add(disposable)
 	}
 
