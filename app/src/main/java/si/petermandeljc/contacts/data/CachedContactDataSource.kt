@@ -19,7 +19,7 @@ class CachedContactDataSource @Inject constructor() { // : DataSource
 	}
 
 	fun loadAll() : Collection<Contact> {
-		return contacts.values.toList()
+		return contacts.values
 	}
 
 	fun loadAllObservable() : Observable<Collection<Contact>> {

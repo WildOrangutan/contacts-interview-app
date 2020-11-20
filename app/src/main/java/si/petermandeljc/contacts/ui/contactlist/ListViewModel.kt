@@ -20,7 +20,7 @@ class ListViewModel @ViewModelInject constructor(
 
 	private val contacts: MutableCollection<Contact> = mutableListOf()
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
-	private val contactClickSubj = PublishSubject.create<Contact?>()
+	private val contactClickSubj = PublishSubject.create<Contact>()
 	private val editContactSubj = PublishSubject.create<Contact>()
 	private val addContactSubj = PublishSubject.create<Unit>()
 	private val disposables = CompositeDisposable()
