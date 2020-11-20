@@ -33,6 +33,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		subscribeSurname()
 		subscribeEmail()
 		subscribeSave()
+		subscribeNavigateBack()
 	}
 
 	private fun findViews() {
@@ -97,6 +98,11 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		saveView.clicks()
 			.bindToLifecycle(requireView())
 			.subscribe(viewModel.saveObserver())
+	}
+
+	private fun subscribeNavigateBack() {
+		viewModel.navigateBackObservable()
+			.subscribe { parentFragmentManager.popBackStack() }
 	}
 
 }

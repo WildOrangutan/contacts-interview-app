@@ -27,6 +27,7 @@ class DetailViewModel @ViewModelInject constructor(
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
 	private val saveSubj = PublishSubject.create<Unit>()
+	private val navigateBackSubj = BehaviorSubject.create<Unit>()
 	private val disposables = CompositeDisposable()
 
 	init {
@@ -52,7 +53,10 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeToSave() {
-		val disposable = saveSubj.subscribe { repository.set(contact) }
+		val disposable = saveSubj.subscribe{
+			repository.set(contact)
+			navigateBackSubj.onNext(Unit)
+		}
 		addDisposable(disposable)
 	}
 
@@ -90,6 +94,10 @@ class DetailViewModel @ViewModelInject constructor(
 
 	fun saveObserver() : Observer<Unit> {
 		return saveSubj
+	}
+
+	fun navigateBackObservable() : Observable<Unit> {
+		return navigateBackSubj
 	}
 
 	override fun onCleared() {
