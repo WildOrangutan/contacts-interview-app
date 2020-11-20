@@ -1,10 +1,10 @@
 package si.petermandeljc.contacts.ui
 
-import android.app.Activity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import si.petermandeljc.contacts.databinding.MainActivityBinding
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
