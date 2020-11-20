@@ -43,7 +43,7 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeToSurname() {
-		val disposable = nameSubj.subscribe { surname -> contact.copy(surname=surname)}
+		val disposable = surnameSubj.subscribe { surname -> contact.copy(surname=surname)}
 		addDisposable(disposable)
 	}
 
