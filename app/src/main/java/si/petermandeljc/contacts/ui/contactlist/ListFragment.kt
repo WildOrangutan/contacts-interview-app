@@ -17,7 +17,9 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	private val disposables = CompositeDisposable()
 	private val viewModel: ListViewModel by viewModels()
-	private val adapter = ListAdapter(mutableListOf(), viewModel.contactClickObserver())
+	private val adapter: ListAdapter by lazy {
+		ListAdapter(mutableListOf(), viewModel.contactClickObserver())
+	}
 
 	private lateinit var binding: ContactListBinding
 
