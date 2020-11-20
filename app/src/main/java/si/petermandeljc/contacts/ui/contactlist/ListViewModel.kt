@@ -19,6 +19,10 @@ class ListViewModel @ViewModelInject constructor(
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
 
 	init {
+		loadContacts()
+	}
+
+	private fun loadContacts() {
 		Observable
 			.fromCallable { repository.getAll() }
 			.observeOn(AndroidSchedulers.mainThread())
