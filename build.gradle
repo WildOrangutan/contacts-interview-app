@@ -1,6 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-	ext.vKotlin = "1.4.10"
+	ext {
+		vKotlin = "1.4.10"
+		vHilt = "2.28-alpha"
+	}
 	repositories {
 		google()
 		jcenter()
@@ -8,6 +11,7 @@ buildscript {
 	dependencies {
 		classpath "com.android.tools.build:gradle:4.1.1"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$vKotlin"
+		classpath "com.google.dagger:hilt-android-gradle-plugin:$vHilt"
 
 		// NOTE: Do not place your application dependencies here; they belong
 		// in the individual module build.gradle files
