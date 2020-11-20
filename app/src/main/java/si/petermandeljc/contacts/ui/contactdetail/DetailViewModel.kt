@@ -22,6 +22,7 @@ class DetailViewModel @ViewModelInject constructor(
 	private val contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
 	private val nameSubject = BehaviorSubject.createDefault(contact.name)
+	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
 	private val disposables = CompositeDisposable()
 
 	init {
@@ -43,6 +44,10 @@ class DetailViewModel @ViewModelInject constructor(
 
 	fun nameObservable() : Observable<String> {
 		return nameSubject.distinctUntilChanged()
+	}
+
+	fun avatarObservable() : Observable<String> {
+		return avatarSubj.distinctUntilChanged()
 	}
 
 	override fun onCleared() {

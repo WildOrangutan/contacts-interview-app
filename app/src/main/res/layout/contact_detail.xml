@@ -2,18 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	>
+
+	<agency.tango.android.avatarview.views.AvatarView
+		android:id="@+id/avatarView"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+		android:layout_marginTop="10dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:src="@drawable/ic_launcher_background"
+		android:contentDescription="@string/content_desc_avatar_image"
+		/>
 
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/nameLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="14dp"
 		android:hint="@string/name"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/avatarView"
 		>
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/name"
