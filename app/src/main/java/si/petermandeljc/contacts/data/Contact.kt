@@ -1,5 +1,7 @@
 package si.petermandeljc.contacts.data
 
+import si.petermandeljc.contacts.utils.firstOrEmpty
+
 data class Contact(
 	val uuid: Uuid,
 	val name: String,
@@ -13,6 +15,12 @@ data class Contact(
 			return Contact(uuid=Uuid.neu(), name=name, surname=surname, email=email,
 				avatarPath=avatarPath)
 		}
+	}
+
+	fun initials() : String {
+		val nameInitial = name.firstOrEmpty()
+		val surnameInitial = surname.firstOrEmpty()
+		return "$nameInitial$surnameInitial"
 	}
 
 }
