@@ -24,14 +24,14 @@ class MainActivity : AppCompatActivity() {
 		loadFragment(ListFragment())
 	}
 
-	private fun loadFragment(fragment: Fragment) {
-		supportFragmentManager.beginTransaction()
-			.replace(R.id.fragment, fragment)
-			.commit()
-	}
 
-	fun editContact(contact: Contact) {
-		// TODO
+	private fun loadFragment(fragment: Fragment, backstack: Boolean=false) {
+		val transaction = supportFragmentManager
+			.beginTransaction()
+			.replace(R.id.fragment, fragment)
+		if(backstack)
+			transaction.addToBackStack(null)
+		transaction.commit()
 	}
 
 }
