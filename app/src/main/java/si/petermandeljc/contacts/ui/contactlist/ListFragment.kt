@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.trello.rxlifecycle4.kotlin.bindToLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import si.petermandeljc.contacts.R
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.databinding.ContactListBinding
@@ -21,7 +19,6 @@ import si.petermandeljc.contacts.ui.MainActivity
 @AndroidEntryPoint
 class ListFragment : Fragment(R.layout.contact_list) {
 
-	private val disposables = CompositeDisposable()
 	private val viewModel: ListViewModel by viewModels()
 	private val adapter: ListAdapter by lazy {
 		ListAdapter(mutableListOf(), viewModel.contactClickObserver())
@@ -47,19 +44,18 @@ class ListFragment : Fragment(R.layout.contact_list) {
 		val listView = binding.list
 		listView.adapter = adapter
 		listView.layoutManager = LinearLayoutManager(requireContext())
-		val disposable = viewModel.contactsObservable()
+		viewModel.contactsObservable()
 			.bindToLifecycle(listView)
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe { contacts ->
 				adapter.updateContacts(contacts.toList())
 			}
-		addDisposable(disposable)
 	}
 
 	private fun subscribeToEditContact() {
-		val disposable = viewModel.editContactObservable()
+		viewModel.editContactObservable()
+			.bindToLifecycle(requireView())
 			.subscribe { contact -> editContact(contact) }
-		addDisposable(disposable)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -76,15 +72,6 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	private fun editContact(contact: Contact) {
 		mainActivity.editContact(contact)
-	}
-
-	private fun addDisposable(disposable: Disposable) {
-		disposables.add(disposable)
-	}
-
-	override fun onDestroyView() {
-		super.onDestroyView()
-		disposables.dispose()
 	}
 
 }
