@@ -23,12 +23,14 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private val nameSubject = BehaviorSubject.createDefault(contact.name)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
+	private val emailSubj = BehaviorSubject.createDefault(contact.email)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
 	private val disposables = CompositeDisposable()
 
 	init {
 		subscribeToName()
 		subscribeToSurname()
+		subscribeToEmail()
 	}
 
 	private fun subscribeToName() {
@@ -38,6 +40,11 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private fun subscribeToSurname() {
 		val disposable = nameSubject.subscribe { surname -> contact.copy(surname=surname)}
+		addDisposable(disposable)
+	}
+
+	private fun subscribeToEmail() {
+		val disposable = emailSubj.subscribe { email -> contact.copy(email=email)}
 		addDisposable(disposable)
 	}
 
@@ -59,6 +66,14 @@ class DetailViewModel @ViewModelInject constructor(
 
 	fun surnameObservable() : Observable<String> {
 		return surnameSubj.distinctUntilChanged()
+	}
+
+	fun emailObserver() : Observer<String> {
+		return emailSubj
+	}
+
+	fun emailObservable() : Observable<String> {
+		return emailSubj.distinctUntilChanged()
 	}
 
 	fun avatarObservable() : Observable<String> {
