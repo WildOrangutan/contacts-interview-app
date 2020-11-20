@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">contacts</string>
+	<string name="content_desc_avatar_image">Avatar image</string>
 </resources>
