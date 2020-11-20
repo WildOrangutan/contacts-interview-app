@@ -1,6 +1,8 @@
 package si.petermandeljc.contacts.data
 
-class CachedContactDataSource { // : DataSource
+import javax.inject.Inject
+
+class CachedContactDataSource @Inject constructor() { // : DataSource
 
 	private val contacts: MutableMap<Uuid,Contact> = mutableMapOf()
 
