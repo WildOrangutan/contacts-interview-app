@@ -21,6 +21,7 @@ class ListViewModel @ViewModelInject constructor(
 	private val contacts: MutableCollection<Contact> = mutableListOf()
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
 	private val contactClickSubj = PublishSubject.create<Contact?>()
+	private val editContactSubj = PublishSubject.create<Contact>()
 	private val disposables = CompositeDisposable()
 
 	init {
@@ -41,12 +42,8 @@ class ListViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeClickSubject() {
-		val disposable = contactClickSubj.subscribe { contact -> onContactClick(contact)}
+		val disposable = contactClickSubj.subscribe { editContactSubj }
 		disposables.add(disposable);
-	}
-
-	private fun onContactClick(contact: Contact) {
-		TODO("edit contact")
 	}
 
 	override fun onCleared() {
@@ -60,6 +57,10 @@ class ListViewModel @ViewModelInject constructor(
 
 	fun contactClickObserver() : Observer<Contact> {
 		return contactClickSubj
+	}
+
+	fun editContactObservable() : Observable<Contact> {
+		return editContactSubj
 	}
 
 }
