@@ -7,6 +7,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import si.petermandeljc.contacts.R
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.databinding.MainActivityBinding
+import si.petermandeljc.contacts.ui.contactdetail.DetailFragment
+import si.petermandeljc.contacts.ui.contactdetail.DetailViewModel.Companion.KEY_CONTACT
 import si.petermandeljc.contacts.ui.contactlist.ListFragment
 
 @AndroidEntryPoint
@@ -24,6 +26,13 @@ class MainActivity : AppCompatActivity() {
 		loadFragment(ListFragment())
 	}
 
+	fun editContact(contact: Contact) {
+		val fragment = DetailFragment()
+		val bundle = Bundle()
+		bundle.putParcelable(KEY_CONTACT, contact)
+		fragment.arguments = bundle
+		loadFragment(fragment, true)
+	}
 
 	private fun loadFragment(fragment: Fragment, backstack: Boolean=false) {
 		val transaction = supportFragmentManager
