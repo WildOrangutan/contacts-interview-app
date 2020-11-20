@@ -24,15 +24,19 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		val binding = ContactDetailBinding.bind(view)
-		nameView = binding.name
-		surnameView = binding.surname
-		emailView = binding.email
-		avatarView = binding.avatarView
+		findViews()
 		subscribeName()
 		subscribeAvatar()
 		subscribeSurname()
 		subscribeEmail()
+	}
+
+	private fun findViews() {
+		val binding = ContactDetailBinding.bind(requireView())
+		nameView = binding.name
+		surnameView = binding.surname
+		emailView = binding.email
+		avatarView = binding.avatarView
 	}
 
 	private fun subscribeName() {
