@@ -88,5 +88,4 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 			}
 	}
 
-
 }
