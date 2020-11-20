@@ -9,7 +9,7 @@
 	android:paddingTop="4dp"
 	>
 
-	<ImageView
+	<agency.tango.android.avatarview.views.AvatarView
 		android:id="@+id/avatar"
 		android:layout_width="0dp"
 		android:layout_height="0dp"

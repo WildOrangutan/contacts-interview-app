@@ -1,5 +1,6 @@
 package si.petermandeljc.contacts.ui.contactlist
 
+import agency.tango.android.avatarview.AvatarPlaceholder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +52,7 @@ class Holder(
 	fun bind(contact: Contact) {
 		Glide.with(context)
 			.load(contact.avatarPath)
+			.placeholder(AvatarPlaceholder(contact.initials()))
 			.into(binding.avatar)
 
 		// noinspection SetTextI18n - Not worth it for single space

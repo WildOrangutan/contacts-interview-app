@@ -61,6 +61,10 @@ dependencies {
 	implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
 	implementation "com.trello.rxlifecycle4:rxlifecycle-kotlin:4.0.2"
 
+	def vAvatarView = '0.0.2'
+	implementation "agency.tango.android:avatar-view:$vAvatarView"
+	implementation "agency.tango.android:avatar-view-glide:$vAvatarView"
+
 	testImplementation 'junit:junit:4.+'
 	androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 	androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
