@@ -4,7 +4,6 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -18,7 +17,6 @@ class ListViewModel @ViewModelInject constructor(
 	@Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-	private val contacts: MutableCollection<Contact> = mutableListOf()
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
 	private val contactClickSubj = PublishSubject.create<Contact>()
 	private val editContactSubj = PublishSubject.create<Contact>()
@@ -32,15 +30,8 @@ class ListViewModel @ViewModelInject constructor(
 	}
 
 	private fun loadContacts() {
-		Observable
-			.fromCallable { repository.getAll() }
-			.observeOn(AndroidSchedulers.mainThread())
-			.take(1)
-			.subscribe { loadedContacts ->
-				contacts.clear()
-				contacts.addAll(loadedContacts)
-				contactsSubj.onNext(contacts)
-			}
+		repository.getAllObservable()
+			.subscribe(contactsSubj)
 	}
 
 	private fun subscribeClickSubject() {

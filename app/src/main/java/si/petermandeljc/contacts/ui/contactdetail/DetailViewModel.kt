@@ -20,7 +20,7 @@ class DetailViewModel @ViewModelInject constructor(
 
 	companion object { const val KEY_CONTACT = "contact" }
 
-	private val contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
+	private var contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
 	private val nameSubj = BehaviorSubject.createDefault(contact.name)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
