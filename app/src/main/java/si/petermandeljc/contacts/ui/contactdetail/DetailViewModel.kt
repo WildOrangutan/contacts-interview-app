@@ -21,7 +21,7 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private val contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
-	private val nameSubject = BehaviorSubject.createDefault(contact.name)
+	private val nameSubj = BehaviorSubject.createDefault(contact.name)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
@@ -34,12 +34,12 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeToName() {
-		val disposable = nameSubject.subscribe { name -> contact.copy(name=name)}
+		val disposable = nameSubj.subscribe { name -> contact.copy(name=name)}
 		addDisposable(disposable)
 	}
 
 	private fun subscribeToSurname() {
-		val disposable = nameSubject.subscribe { surname -> contact.copy(surname=surname)}
+		val disposable = nameSubj.subscribe { surname -> contact.copy(surname=surname)}
 		addDisposable(disposable)
 	}
 
@@ -53,11 +53,11 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	fun nameObserver() : Observer<String> {
-		return nameSubject
+		return nameSubj
 	}
 
 	fun nameObservable() : Observable<String> {
-		return nameSubject.distinctUntilChanged()
+		return nameSubj.distinctUntilChanged()
 	}
 
 	fun surnameObserver() : Observer<String> {
