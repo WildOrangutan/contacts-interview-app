@@ -21,7 +21,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	private val viewModel: ListViewModel by viewModels()
 	private val adapter: ListAdapter by lazy {
-		ListAdapter(mutableListOf(), viewModel.contactClickObserver())
+		ListAdapter(mutableListOf(), viewModel.contactClickObserver)
 	}
 
 	private lateinit var binding: ContactListBinding
@@ -44,7 +44,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 		val listView = binding.list
 		listView.adapter = adapter
 		listView.layoutManager = LinearLayoutManager(requireContext())
-		viewModel.contactsObservable()
+		viewModel.contactsObservable
 			.bindToLifecycle(listView)
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe { contacts ->
@@ -53,7 +53,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 	}
 
 	private fun subscribeToEditContact() {
-		viewModel.editContactObservable()
+		viewModel.editContactObservable
 			.bindToLifecycle(requireView())
 			.subscribe { contact -> editContact(contact) }
 	}
@@ -64,7 +64,7 @@ class ListFragment : Fragment(R.layout.contact_list) {
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if(item.itemId == R.id.menu_new_contact) {
-			viewModel.addContactObserver().onNext(Unit)
+			viewModel.addContactObserver.onNext(Unit)
 			return true
 		}
 		return false

@@ -17,6 +17,11 @@ class ListViewModel @ViewModelInject constructor(
 	@Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+	val contactsObservable: Observable<Collection<Contact>> get() = contactsSubj
+	val contactClickObserver: Observer<Contact> get() = contactClickSubj
+	val editContactObservable: Observable<Contact> get() = editContactSubj
+	val addContactObserver: Observer<Unit> get() = addContactSubj
+
 	private val contactsSubj = BehaviorSubject.create<Collection<Contact>>()
 	private val contactClickSubj = PublishSubject.create<Contact>()
 	private val editContactSubj = PublishSubject.create<Contact>()
@@ -46,22 +51,6 @@ class ListViewModel @ViewModelInject constructor(
 	override fun onCleared() {
 		super.onCleared()
 		disposables.clear()
-	}
-
-	fun contactsObservable() : Observable<Collection<Contact>> {
-		return contactsSubj
-	}
-
-	fun contactClickObserver() : Observer<Contact> {
-		return contactClickSubj
-	}
-
-	fun editContactObservable() : Observable<Contact> {
-		return editContactSubj
-	}
-
-	fun addContactObserver() : Observer<Unit> {
-		return addContactSubj
 	}
 
 }
