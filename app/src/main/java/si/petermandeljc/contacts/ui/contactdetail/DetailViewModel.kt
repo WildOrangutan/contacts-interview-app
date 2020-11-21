@@ -24,6 +24,18 @@ class DetailViewModel @ViewModelInject constructor(
 		const val EMAIL_NO_ERR = -1
 	}
 
+	val nameObserver: Observer<String> get() = nameSubj
+	val nameObservable: Observable<String> get() = nameSubj.distinctUntilChanged()
+	val surnameObserver: Observer<String> get() = surnameSubj
+	val surnameObservable: Observable<String> get() = surnameSubj.distinctUntilChanged()
+	val emailObserver: Observer<String> get() = emailSubj
+	val emailObservable: Observable<String> get() = emailSubj.distinctUntilChanged()
+	/** @return observable, that emits string resource id, or [EMAIL_NO_ERR] when no error */
+	val emailErrObservable: Observable<Int> get() = emailErrSubj.distinctUntilChanged()
+	val avatarObservable: Observable<String> get() = avatarSubj.distinctUntilChanged()
+	val saveObserver: Observer<Unit> get() = saveSubj
+	val navigateBackObservable: Observable<Unit> get() = navigateBackSubj
+
 	private var contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
 	private val nameSubj = BehaviorSubject.createDefault(contact.name)
@@ -82,47 +94,6 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private fun addDisposable(disposable: Disposable) {
 		disposables.add(disposable)
-	}
-
-	fun nameObserver() : Observer<String> {
-		return nameSubj
-	}
-
-	fun nameObservable() : Observable<String> {
-		return nameSubj.distinctUntilChanged()
-	}
-
-	fun surnameObserver() : Observer<String> {
-		return surnameSubj
-	}
-
-	fun surnameObservable() : Observable<String> {
-		return surnameSubj.distinctUntilChanged()
-	}
-
-	fun emailObserver() : Observer<String> {
-		return emailSubj
-	}
-
-	fun emailObservable() : Observable<String> {
-		return emailSubj.distinctUntilChanged()
-	}
-
-	/** @return observable, that emits string resource id, or [EMAIL_NO_ERR] when no error */
-	fun emailErrObservable() : Observable<Int> {
-		return emailErrSubj.distinctUntilChanged()
-	}
-
-	fun avatarObservable() : Observable<String> {
-		return avatarSubj.distinctUntilChanged()
-	}
-
-	fun saveObserver() : Observer<Unit> {
-		return saveSubj
-	}
-
-	fun navigateBackObservable() : Observable<Unit> {
-		return navigateBackSubj
 	}
 
 	override fun onCleared() {

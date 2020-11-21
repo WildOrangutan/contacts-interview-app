@@ -49,50 +49,50 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 
 	private fun subscribeName() {
 		val view = nameView
-		viewModel.nameObservable()
+		viewModel.nameObservable
 			.bindToLifecycle(view)
 			.filter { name -> name != view.text.toString() }
 			.subscribe { name -> view.setText(name) }
 		view.textChanges()
 			.bindToLifecycle(view)
 			.map { name -> name.toString() }
-			.subscribe(viewModel.nameObserver())
+			.subscribe(viewModel.nameObserver)
 	}
 
 	private fun subscribeSurname() {
 		val view = surnameView
-		viewModel.surnameObservable()
+		viewModel.surnameObservable
 			.bindToLifecycle(view)
 			.filter { surname -> surname != view.text.toString() }
 			.subscribe { surname -> view.setText(surname) }
 		view.textChanges()
 			.bindToLifecycle(view)
 			.map { surname -> surname.toString() }
-			.subscribe(viewModel.surnameObserver())
+			.subscribe(viewModel.surnameObserver)
 	}
 
 	private fun subscribeEmail() {
 		val view = emailView
-		viewModel.emailObservable()
+		viewModel.emailObservable
 			.bindToLifecycle(view)
 			.filter { email -> email != view.text.toString() }
 			.subscribe { email -> view.setText(email) }
 		view.textChanges()
 			.bindToLifecycle(view)
 			.map { email -> email.toString() }
-			.subscribe(viewModel.emailObserver())
+			.subscribe(viewModel.emailObserver)
 	}
 
 	private fun subscribeEmailErr() {
 		val view = emailView
-		viewModel.emailErrObservable()
+		viewModel.emailErrObservable
 			.bindToLifecycle(view)
 			.subscribe { error -> view.error = if(error==EMAIL_NO_ERR) null else getString(error) }
 	}
 
 	private fun subscribeAvatar() {
 		val view = avatarView
-		viewModel.avatarObservable()
+		viewModel.avatarObservable
 			.bindToLifecycle(view)
 			.subscribe { path ->
 				Glide.with(view)
@@ -106,11 +106,11 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	private fun subscribeSave() {
 		saveView.clicks()
 			.bindToLifecycle(requireView())
-			.subscribe(viewModel.saveObserver())
+			.subscribe(viewModel.saveObserver)
 	}
 
 	private fun subscribeNavigateBack() {
-		viewModel.navigateBackObservable()
+		viewModel.navigateBackObservable
 			.subscribe { parentFragmentManager.popBackStack() }
 	}
 
