@@ -49,9 +49,11 @@ dependencies {
 
 	implementation "com.google.dagger:hilt-android:$vHilt"
 	kapt "com.google.dagger:hilt-android-compiler:$vHilt"
+	def vHiltViewModel = "1.0.0-alpha02"
 	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$vHiltViewModel"
 	kapt "androidx.hilt:hilt-compiler:$vHiltViewModel"
 
+	def vConstraintLayout = "2.0.4"
 	implementation "androidx.constraintlayout:constraintlayout:$vConstraintLayout"
 
 	def vGlide = '4.11.0'

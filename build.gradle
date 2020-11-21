@@ -2,8 +2,6 @@ buildscript {
 	ext {
 		vKotlin = "1.4.10"
 		vHilt = "2.28-alpha"
-		vHiltViewModel = "1.0.0-alpha02"
-		vConstraintLayout = "2.0.4"
 	}
 	repositories {
 		google()
