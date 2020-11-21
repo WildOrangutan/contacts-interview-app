@@ -17,5 +17,4 @@ class ContactRepository @Inject constructor(
 		return cachedSource.loadAllObservable()
 	}
 
-
 }
