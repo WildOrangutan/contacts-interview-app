@@ -79,6 +79,10 @@ class DetailViewModel @ViewModelInject constructor(
 		addDisposable(disposable)
 	}
 
+	private fun addDisposable(disposable: Disposable) {
+		disposables.add(disposable)
+	}
+
 	private fun validateContact() : Boolean {
 		val validEmail = isValidEmail()
 		val nextError = if(validEmail) EMAIL_NO_ERR else R.string.err_invalid_email
@@ -90,10 +94,6 @@ class DetailViewModel @ViewModelInject constructor(
 	private fun isValidEmail() : Boolean {
 		val email = contact.email
 		return email.isNotEmpty() && email.contains("@")
-	}
-
-	private fun addDisposable(disposable: Disposable) {
-		disposables.add(disposable)
 	}
 
 	override fun onCleared() {
