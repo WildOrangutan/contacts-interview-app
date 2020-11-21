@@ -14,14 +14,6 @@ class CachedContactDataSource @Inject constructor() { // : DataSource
 		subject.onNext(contacts.values)
 	}
 
-	fun load(uuid: Uuid) : Contact? {
-		return contacts[uuid]
-	}
-
-	fun loadAll() : Collection<Contact> {
-		return contacts.values
-	}
-
 	fun loadAllObservable() : Observable<Collection<Contact>> {
 		return subject
 	}
