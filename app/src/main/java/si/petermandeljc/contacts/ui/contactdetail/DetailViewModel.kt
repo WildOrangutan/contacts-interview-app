@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import si.petermandeljc.contacts.R
 import si.petermandeljc.contacts.data.Contact
 import si.petermandeljc.contacts.data.ContactRepository
 
@@ -18,13 +19,17 @@ class DetailViewModel @ViewModelInject constructor(
 	@Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-	companion object { const val KEY_CONTACT = "contact" }
+	companion object {
+		const val KEY_CONTACT = "contact"
+		const val EMAIL_NO_ERR = -1
+	}
 
 	private var contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
 	private val nameSubj = BehaviorSubject.createDefault(contact.name)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
+	private val emailErrSubj = BehaviorSubject.createDefault(EMAIL_NO_ERR)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
 	private val saveSubj = PublishSubject.create<Unit>()
 	private val navigateBackSubj = BehaviorSubject.create<Unit>()
@@ -53,11 +58,26 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeToSave() {
-		val disposable = saveSubj.subscribe{
-			repository.set(contact)
-			navigateBackSubj.onNext(Unit)
+		val disposable = saveSubj.subscribe {
+			if(validateContact()) {
+				repository.set(contact)
+				navigateBackSubj.onNext(Unit)
+			}
 		}
 		addDisposable(disposable)
+	}
+
+	private fun validateContact() : Boolean {
+		val validEmail = isValidEmail()
+		val nextError = if(validEmail) EMAIL_NO_ERR else R.string.err_invalid_email
+		emailErrSubj.onNext(nextError)
+		// validate name, surname, etc.
+		return validEmail
+	}
+
+	private fun isValidEmail() : Boolean {
+		val email = contact.email
+		return email.isNotEmpty() && email.contains("@")
 	}
 
 	private fun addDisposable(disposable: Disposable) {
@@ -86,6 +106,11 @@ class DetailViewModel @ViewModelInject constructor(
 
 	fun emailObservable() : Observable<String> {
 		return emailSubj.distinctUntilChanged()
+	}
+
+	/** @return observable, that emits string resource id, or [EMAIL_NO_ERR] when no error */
+	fun emailErrObservable() : Observable<Int> {
+		return emailErrSubj.distinctUntilChanged()
 	}
 
 	fun avatarObservable() : Observable<String> {

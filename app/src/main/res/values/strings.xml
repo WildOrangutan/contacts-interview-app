@@ -6,4 +6,5 @@
 	<string name="surname">Surname</string>
 	<string name="e_mail">E-mail</string>
 	<string name="new_contact">New contact</string>
+	<string name="err_invalid_email">Invalid email</string>
 </resources>
