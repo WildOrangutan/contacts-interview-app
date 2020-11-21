@@ -35,8 +35,7 @@ class ListViewModel @ViewModelInject constructor(
 	}
 
 	private fun subscribeClickSubject() {
-		val disposable = contactClickSubj.subscribe { contact -> editContactSubj.onNext(contact)}
-		disposables.add(disposable)
+		contactClickSubj.subscribe(editContactSubj)
 	}
 
 	private fun subscribeAddContactSubject() {
