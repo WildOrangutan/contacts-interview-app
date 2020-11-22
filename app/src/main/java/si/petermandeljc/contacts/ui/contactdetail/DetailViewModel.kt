@@ -24,7 +24,7 @@ class DetailViewModel @ViewModelInject constructor(
 
 	companion object {
 		const val KEY_CONTACT = "contact"
-		private const val EMAIL_NO_ERR = ""
+		private const val NO_ERROR = ""
 	}
 
 	val nameObserver: Observer<String> get() = nameSubj
@@ -33,7 +33,7 @@ class DetailViewModel @ViewModelInject constructor(
 	val surnameObservable: Observable<String> get() = surnameSubj.distinctUntilChanged()
 	val emailObserver: Observer<String> get() = emailSubj
 	val emailObservable: Observable<String> get() = emailSubj.distinctUntilChanged()
-	/** @return observable, that emits error string, or [EMAIL_NO_ERR] when no error */
+	/** @return observable, that emits error string, or [NO_ERROR] when no error */
 	val emailErrObservable: Observable<String> get() = emailErrSubj.distinctUntilChanged()
 	val avatarObservable: Observable<String> get() = avatarSubj.distinctUntilChanged()
 	val saveObserver: Observer<Unit> get() = saveSubj
@@ -44,7 +44,7 @@ class DetailViewModel @ViewModelInject constructor(
 	private val nameSubj = BehaviorSubject.createDefault(contact.name)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
-	private val emailErrSubj = BehaviorSubject.createDefault(EMAIL_NO_ERR)
+	private val emailErrSubj = BehaviorSubject.createDefault(NO_ERROR)
 	private val avatarSubj = BehaviorSubject.createDefault(contact.avatarPath)
 	private val saveSubj = PublishSubject.create<Unit>()
 	private val navigateBackSubj = BehaviorSubject.create<Unit>()
@@ -90,7 +90,7 @@ class DetailViewModel @ViewModelInject constructor(
 
 	private fun validateContact() : Boolean {
 		val validEmail = isValidEmail()
-		val nextError = if(validEmail) EMAIL_NO_ERR else emailError
+		val nextError = if(validEmail) NO_ERROR else emailError
 		emailErrSubj.onNext(nextError)
 		// validate name, surname, etc.
 		return validEmail
