@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.trello.rxlifecycle4.kotlin.bindToLifecycle
@@ -23,6 +24,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	private lateinit var nameView: EditText
 	private lateinit var surnameView: EditText
 	private lateinit var emailView: EditText
+	private lateinit var emailLayout: TextInputLayout
 	private lateinit var avatarView: ImageView
 	private lateinit var saveView: FloatingActionButton
 
@@ -43,6 +45,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		nameView = binding.name
 		surnameView = binding.surname
 		emailView = binding.email
+		emailLayout = binding.emailLayout
 		avatarView = binding.avatarView
 		saveView = binding.save
 	}
@@ -84,7 +87,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	}
 
 	private fun subscribeEmailErr() {
-		val view = emailView
+		val view = emailLayout
 		viewModel.emailErrObservable
 			.bindToLifecycle(view)
 			.subscribe { error -> view.error = if(error==EMAIL_NO_ERR) null else getString(error) }
