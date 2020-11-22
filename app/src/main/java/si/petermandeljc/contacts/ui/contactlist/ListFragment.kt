@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import com.trello.rxlifecycle4.kotlin.bindToLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -31,6 +32,12 @@ class ListFragment : Fragment(R.layout.contact_list) {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setHasOptionsMenu(true)
+		initExitTransition()
+	}
+
+	private fun initExitTransition() {
+		val inflater = TransitionInflater.from(requireContext())
+		exitTransition = inflater.inflateTransition(android.R.transition.slide_left)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

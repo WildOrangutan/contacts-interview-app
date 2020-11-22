@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
@@ -26,6 +27,16 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	private lateinit var emailLayout: TextInputLayout
 	private lateinit var avatarView: ImageView
 	private lateinit var saveView: FloatingActionButton
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		initEnterTransition()
+	}
+
+	private fun initEnterTransition() {
+		val inflater = TransitionInflater.from(requireContext())
+		enterTransition = inflater.inflateTransition(android.R.transition.slide_right)
+	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
