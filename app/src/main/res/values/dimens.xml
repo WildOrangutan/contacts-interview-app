@@ -2,4 +2,5 @@
 <resources>
 	<dimen name="padding_screen">4dp</dimen>
 	<dimen name="padding_item_list">4dp</dimen>
+	<dimen name="margin_between_input_layout">6dp</dimen>
 </resources>
