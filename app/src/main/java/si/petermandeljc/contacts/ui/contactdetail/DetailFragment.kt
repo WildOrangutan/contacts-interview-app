@@ -99,7 +99,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 			.subscribe { path ->
 				Glide.with(view)
 					.load(path)
-					.placeholder(R.drawable.avatar_placeholder)
+					.placeholder(R.drawable.ic_avatar_placeholder)
 					.circleCrop()
 					.into(view)
 			}
