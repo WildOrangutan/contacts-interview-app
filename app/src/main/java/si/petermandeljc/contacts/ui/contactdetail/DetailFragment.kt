@@ -15,7 +15,6 @@ import com.trello.rxlifecycle4.kotlin.bindToLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import si.petermandeljc.contacts.R
 import si.petermandeljc.contacts.databinding.ContactDetailBinding
-import si.petermandeljc.contacts.ui.contactdetail.DetailViewModel.Companion.EMAIL_NO_ERR
 
 @AndroidEntryPoint
 class DetailFragment: Fragment(R.layout.contact_detail) {
@@ -90,7 +89,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		val view = emailLayout
 		viewModel.emailErrObservable
 			.bindToLifecycle(view)
-			.subscribe { error -> view.error = if(error==EMAIL_NO_ERR) null else getString(error) }
+			.subscribe { error -> view.error = error }
 	}
 
 	private fun subscribeAvatar() {
