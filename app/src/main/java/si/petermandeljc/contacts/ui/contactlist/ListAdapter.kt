@@ -24,7 +24,7 @@ class ListAdapter(
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 		val context = parent.context
 		val inflater = LayoutInflater.from(context)
-		val binding = ContactListItemBinding.inflate(inflater)
+		val binding = ContactListItemBinding.inflate(inflater, parent, false)
 		return Holder(binding, clickObserver)
 	}
 
