@@ -89,10 +89,15 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun validateContact() : Boolean {
+		val validEmail = validateEmail()
+		return validEmail
+		// validate name, surname, etc.
+	}
+
+	private fun validateEmail() : Boolean {
 		val validEmail = isValidEmail()
 		val nextError = if(validEmail) NO_ERROR else emailError
 		emailErrSubj.onNext(nextError)
-		// validate name, surname, etc.
 		return validEmail
 	}
 
