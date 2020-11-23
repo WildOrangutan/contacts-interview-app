@@ -117,8 +117,7 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun isValidEmail() : Boolean {
-		val email = contact.email
-		return email.isNotEmpty() && email.contains("@")
+		return contact.email.contains("\\S+@\\S+\\.\\S+".toRegex())
 	}
 
 	override fun onCleared() {
