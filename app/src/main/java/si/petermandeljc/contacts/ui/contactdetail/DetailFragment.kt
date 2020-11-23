@@ -22,6 +22,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 
 	private val viewModel: DetailViewModel by viewModels()
 	private lateinit var nameView: EditText
+	private lateinit var nameLayout: TextInputLayout
 	private lateinit var surnameView: EditText
 	private lateinit var emailView: EditText
 	private lateinit var emailLayout: TextInputLayout
@@ -42,6 +43,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 		super.onViewCreated(view, savedInstanceState)
 		findViews()
 		subscribeName()
+		subscribeNameErr()
 		subscribeAvatar()
 		subscribeSurname()
 		subscribeEmail()
@@ -53,6 +55,7 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 	private fun findViews() {
 		val binding = ContactDetailBinding.bind(requireView())
 		nameView = binding.name
+		nameLayout = binding.nameLayout
 		surnameView = binding.surname
 		emailView = binding.email
 		emailLayout = binding.emailLayout
@@ -70,6 +73,13 @@ class DetailFragment: Fragment(R.layout.contact_detail) {
 			.bindToLifecycle(view)
 			.map { name -> name.toString() }
 			.subscribe(viewModel.nameObserver)
+	}
+
+	private fun subscribeNameErr() {
+		val view = nameLayout
+		viewModel.nameErrObservable
+			.bindToLifecycle(view)
+			.subscribe { error -> view.error = error }
 	}
 
 	private fun subscribeSurname() {

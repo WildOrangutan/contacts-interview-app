@@ -29,6 +29,7 @@ class DetailViewModel @ViewModelInject constructor(
 
 	val nameObserver: Observer<String> get() = nameSubj
 	val nameObservable: Observable<String> get() = nameSubj.distinctUntilChanged()
+	val nameErrObservable: Observable<String> get() = nameErrSubj.distinctUntilChanged()
 	val surnameObserver: Observer<String> get() = surnameSubj
 	val surnameObservable: Observable<String> get() = surnameSubj.distinctUntilChanged()
 	val emailObserver: Observer<String> get() = emailSubj
@@ -42,6 +43,7 @@ class DetailViewModel @ViewModelInject constructor(
 	private var contact: Contact = savedStateHandle.get<Contact>(KEY_CONTACT)!!
 
 	private val nameSubj = BehaviorSubject.createDefault(contact.name)
+	private val nameErrSubj = BehaviorSubject.createDefault(NO_ERROR)
 	private val surnameSubj = BehaviorSubject.createDefault(contact.surname)
 	private val emailSubj = BehaviorSubject.createDefault(contact.email)
 	private val emailErrSubj = BehaviorSubject.createDefault(NO_ERROR)
@@ -50,6 +52,7 @@ class DetailViewModel @ViewModelInject constructor(
 	private val navigateBackSubj = BehaviorSubject.create<Unit>()
 	private val disposables = CompositeDisposable()
 
+	private val nameError = context.getString(R.string.err_invalid_name)
 	private val emailError = context.getString(R.string.err_invalid_email)
 
 	init {
@@ -89,9 +92,21 @@ class DetailViewModel @ViewModelInject constructor(
 	}
 
 	private fun validateContact() : Boolean {
+		val validName = validateName()
 		val validEmail = validateEmail()
-		return validEmail
-		// validate name, surname, etc.
+		return validName && validEmail
+		// validate surname, etc.
+	}
+
+	private fun validateName() : Boolean {
+		val valid = isValidName()
+		val nextError = if(valid) NO_ERROR else nameError
+		nameErrSubj.onNext(nextError)
+		return valid
+	}
+
+	private fun isValidName() : Boolean {
+		return contact.name.contains("\\S+".toRegex())
 	}
 
 	private fun validateEmail() : Boolean {
